@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>University of Venda - GTCI Chinese Class</title>
+<style>
+  /* Color Palette */
+  :root {
+    --primary-blue: #4a90e2;
+    --secondary-blue: #71b7ff;
+    --accent-orange: #ff7a18;
+    --accent-orange-light: #ffa651;
+    --bg-light: #f0f6fb;
+    --text-dark: #22303c;
+    --text-light: #ffffff;
+  }
+
+  /* Reset & base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--accent-orange);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: var(--primary-blue);
+    outline: none;
+  }
+
+  /* Header & Navigation */
+  header {
+    background: var(--primary-blue);
+    color: var(--text-light);
+    position: fixed;
+    width: 100%;
+    top: 0; left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    animation: slideDown 1s ease forwards;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+  }
+  nav .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    user-select: none;
+  }
+  nav ul {
+    display: flex;
+    list-style: none;
+  }
+  nav ul li {
+    margin-left: 2rem;
+  }
+  nav ul li a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  nav ul li a:hover,
+  nav ul li a:focus {
+    background: var(--accent-orange);
+    color: var(--text-light);
+    outline: none;
+  }
+
+  /* Hero Section */
+  #home {
+    padding: 10rem 1rem 6rem;
+    background: linear-gradient(135deg, var(--secondary-blue), var(--accent-orange));
+    color: var(--text-light);
+    text-align: center;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+    animation: fadeIn 1.5s ease forwards;
+  }
+  #home h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  }
+  #home p {
+    font-size: 1.3rem;
+    max-width: 650px;
+    margin: 0 auto;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  }
+  #home .btn {
+    margin-top: 2.5rem;
+    background: var(--text-light);
+    color: var(--accent-orange);
+    padding: 0.75rem 2rem;
+    font-weight: 700;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    box-shadow: 0 6px 15px rgba(255, 122, 24, 0.5);
+    transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease;
+  }
+  #home .btn:hover,
+  #home .btn:focus {
+    background: var(--accent-orange);
+    color: var(--text-light);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  /* Section Styling */
+  section {
+    max-width: 1100px;
+    margin: 6rem auto 4rem;
+    padding: 0 1.5rem;
+    opacity: 0;
+    transform: translateY(40px);
+    animation-fill-mode: forwards;
+  }
+  section.visible {
+    animation: slideUpFade 1s ease forwards;
+  }
+  section h2 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+    color: var(--primary-blue);
+    position: relative;
+  }
+  section h2::after {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 5px;
+    background: var(--accent-orange);
+    margin: 0.6rem auto 0;
+    border-radius: 3px;
+  }
+  section p {
+    max-width: 720px;
+    margin: 1rem auto 2rem;
+    font-size: 1.1rem;
+    color: #455a6b;
+  }
+
+  /* Educators grid */
+  .educators {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+  }
+  .educator-card {
+    background: var(--text-light);
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  .educator-card:hover,
+  .educator-card:focus-within {
+    transform: translateY(-10px);
+    box-shadow: 0 14px 40px rgba(255, 122, 24, 0.3);
+    outline: none;
+  }
+  .educator-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    filter: grayscale(40%);
+    transition: filter 0.4s ease;
+  }
+  .educator-card:hover img,
+  .educator-card:focus-within img {
+    filter: grayscale(0);
+  }
+  .educator-info {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+  .educator-info h3 {
+    margin-bottom: 0.3rem;
+    color: var(--primary-blue);
+    font-weight: 700;
+  }
+  .educator-info p {
+    color: #546e7a;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  /* About section list */
+  #about ul {
+    max-width: 720px;
+    margin: 1rem auto 0;
+    padding-left: 1.4rem;
+    color: #546e7a;
+    font-size: 1.05rem;
+  }
+  #about ul li {
+    margin-bottom: 0.7rem;
+  }
+
+  /* Contact form */
+  #contact form {
+    max-width: 500px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  #contact label {
+    margin: 0.6rem 0 0.2rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+  #contact input, #contact textarea {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1.8px solid var(--secondary-blue);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  #contact input:focus, #contact textarea:focus {
+    border-color: var(--accent-orange);
+    outline: none;
+  }
+  #contact textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  #contact button {
+    margin-top: 1.5rem;
+    background: var(--accent-orange);
+    color: var(--text-light);
+    border: none;
+    padding: 0.85rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(255, 122, 24, 0.5);
+    transition: background-color 0.4s ease, transform 0.3s ease;
+  }
+  #contact button:hover,
+  #contact button:focus {
+    background: var(--primary-blue);
+    transform: scale(1.05);
+    outline: none;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--primary-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1.8rem 1rem;
+    margin-top: 5rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  /* Animations */
+  @keyframes slideDown {
+    from {opacity: 0; transform: translateY(-40px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  @keyframes slideUpFade {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive typography */
+  @media (max-width: 700px) {
+    #home h1 {
+      font-size: 2.3rem;
+    }
+    section h2 {
+      font-size: 2rem;
+    }
+    nav ul li {
+      margin-left: 1rem;
+    }
+  }
+
+  @media (max-width: 450px) {
+    nav ul {
+      flex-direction: column;
+      background: var(--primary-blue);
+      position: fixed;
+      top: 70px;
+      right: 0;
+      width: 200px;
+      padding: 1rem 0;
+      display: none;
+    }
+    nav ul.show {
+      display: flex;
+    }
+    nav ul li {
+      margin: 1rem 0;
+      text-align: center;
+    }
+    .menu-toggle {
+      display: block;
+      cursor: pointer;
+      font-size: 1.8rem;
+      color: var(--text-light);
+    }
+  }
+  .menu-toggle {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav role="navigation" aria-label="Primary Navigation">
+      <div class="logo" tabindex="0">GTCI Chinese Class</div>
+      <div class="menu-toggle" aria-label="Toggle menu" role="button" tabindex="0">&#9776;</div>
+      <ul>
+        <li><a href="#home" tabindex="0">Home</a></li>
+        <li><a href="#about" tabindex="0">About</a></li>
+        <li><a href="#educators" tabindex="0">Educators</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="home" tabindex="-1" aria-label="Home section">
+    <h1>Welcome to the Chinese Language Program</h1>
+    <p>Join the University of Venda's Green Technology Confucius Institute for an immersive experience in Chinese language and culture, driven by innovation and sustainability.</p>
+    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" aria-label="Contact us now">Contact Us</button>
+  </section>
+
+  <section id="about" tabindex="-1" aria-label="About section">
+    <h2>About GTCI Chinese Class</h2>
+    <p>The Green Technology Confucius Institute (GTCI) at the University of Venda offers high-quality Chinese language education, fostering cultural understanding and promoting sustainable development through language learning.</p>
+    <ul>
+      <li>Courses for all levels: Beginner to Advanced</li>
+      <li>Integration of green technology vocabulary</li>
+      <li>Experienced native and local educators</li>
+      <li>Interactive, technology-enhanced lessons</li>
+      <li>Cultural events and workshops</li>
+    </ul>
+  </section>
+
+  <section id="educators" tabindex="-1" aria-label="Educators section">
+    <h2>Meet Our Educators</h2>
+    <div class="educators">
+      <article class="educator-card" tabindex="0" aria-label="Educator Li Wei">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Photo of Educator Li Wei" />
+        <div class="educator-info">
+          <h3>Li Wei</h3>
+          <p>Senior Chinese Language Lecturer with 10+ years teaching experience specializing in modern conversational Mandarin and culture.</p>
+        </div>
+      </article>
+      <article class="educator-card" tabindex="0" aria-label="Educator Chen Ming">
+        <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Photo of Educator Chen Ming" />
+        <div class="educator-info">
+          <h3>Chen Ming</h3>
+          <p>Expert in Chinese Literature and green technology vocabulary integration, bridging language skills with sustainable innovation.</p>
+        </div>
+      </article>
+      <article class="educator-card" tabindex="0" aria-label="Educator Zhang Xia">
+        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Photo of Educator Zhang Xia" />
+        <div class="educator-info">
+          <h3>Zhang Xia</h3>
+          <p>Passionate instructor focused on Chinese culture, history, and immersive teaching techniques for all learner levels.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" tabindex="-1" aria-label="Contact section">
+    <h2>Contact Us</h2>
+    <p>Have questions or want to enroll? Send us a message and we’ll get back to you promptly.</p>
+    <form aria-label="Contact form" onsubmit="event.preventDefault(); alert('Thank you for your message!'); this.reset();">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your full name" aria-required="true" />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com" aria-required="true" />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required placeholder="Your message..." aria-required="true"></textarea>
+
+      <button type="submit" aria-label="Send message">Send Message</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 University of Venda - Green Technology Confucius Institute. All Rights Reserved.
+</footer>
+
+<script>
+  // Animate sections on scroll
+  const sections = document.querySelectorAll('section');
+
+  function checkVisibility() {
+    const triggerBottom = window.innerHeight * 0.85;
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < triggerBottom) {
+        section.classList.add('visible');
+      }
+    });
+  }
+  window.addEventListener('scroll', checkVisibility);
+  window.addEventListener('load', checkVisibility);
+
+  // Mobile nav toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('nav ul');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+
+  // Accessibility: toggle nav with keyboard
+  menuToggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navLinks.classList.toggle('show');
+    }
+  });
+</script>
+
+</body>
+</html>
